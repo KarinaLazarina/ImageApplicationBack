@@ -1,0 +1,31 @@
+version: '2'
+services:
+  backend:
+    container_name: backend
+    image: karina11232/object-detection:back
+    ports:
+      - 8080:8080
+    networks:
+      - common-network
+    depends_on:
+      - db
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: image_db
+    ports:
+      - 5432:5432
+    networks:
+      - common-network
+  frontend:
+    container_name: frontend
+    image: karina11232/object-detection:front
+    ports:
+      - 80:80
+    networks:
+      - common-network
+networks:
+  common-network:
